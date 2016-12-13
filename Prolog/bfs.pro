@@ -57,7 +57,7 @@ simular(Problema) :-
 /*
  * 	Problema de los n-caballos
  *
- *
+ *	legal: quitar solo los caballos que puedan comer gente
  *
  *
  *
@@ -110,7 +110,49 @@ validTable([k(X,Y)|T]) :-
 movimiento(mk,Edo,Victima) :- member(Victima,Edo).
 moverse(mk,EdoAct,Victima,ProxEdo) :-
 	delete(EdoAct,Victima,ProxEdo).
-legal(mk,_).
+legal(mk,mk(k(X,Y),Estado)) :- util(k(X,Y),Estado).
+util(k(X,Y), [k(X,Y)|[]]) :- fail.
+util(k(X,Y), Estado) :-
+	X1 is X+2,
+	Y1 is Y+1,
+	member(k(X1,Y1),Estado),
+	!.
+util(k(X,Y), Estado) :-
+	X2 is X+2,
+	Y2 is Y-1,
+	member(k(X2,Y2),Estado),
+	!.
+util(k(X,Y), Estado) :-
+	X3 is X-2,
+	Y3 is Y+1,
+	member(k(X3,Y3),Estado),
+	!.
+util(k(X,Y), Estado) :-
+	X4 is X-2,
+	Y4 is Y-1,
+	member(k(X4,Y4),Estado),
+	!.
+util(k(X,Y), Estado) :-
+	X5 is X-1,
+	Y5 is Y+2,
+	member(k(X5,Y5),Estado),
+	!.
+util(k(X,Y), Estado) :-
+	X6 is X-1,
+	Y6 is Y-2,
+	member(k(X6,Y6),Estado),
+	!.
+util(k(X,Y), Estado) :-
+	X7 is X+1,
+	Y7 is Y+2,
+	member(k(X7,Y7),Estado),
+	!.
+util(k(X,Y), Estado) :-
+	X8 is X+1,
+	Y8 is Y-2,
+	member(k(X8,Y8),Estado),
+	!.
+
 
 arre(TamanoTablero, CantidadPiezas, ListaPiezas) :-
 	inicial(mk,(mk(ListaPiezas,TamanoTablero,CantidadPiezas))),
